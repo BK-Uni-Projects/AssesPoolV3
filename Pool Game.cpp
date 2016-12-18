@@ -1,11 +1,26 @@
 // Pool Game.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
-#include "stdafx.h"
-#include<glut.h>
-#include<math.h>
-#include"simulation.h"
+#include <stdio.h>
+#include <tchar.h>
+#include <math.h>
+
+#include <glut.h>
+
+#include "vecmath.h"
+#include "table.h"
+
+/*-----------------------------------------------------------
+  Macros
+  -----------------------------------------------------------*/
+#define TWO_PI			(6.2832f)
+#define	SIM_UPDATE_MS	(10)
+
+
+/*-----------------------------------------------------------
+  globals
+  -----------------------------------------------------------*/
+table gTable;
 
 //cue variables
 float gCueAngle = 0.0;

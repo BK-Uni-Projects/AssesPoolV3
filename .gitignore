@@ -4,3 +4,6 @@ Pool Game.VC.db
 Debug/
 Release/
 Pool Game.vcxproj.user
+html/
+latex/
+Doxyfile
