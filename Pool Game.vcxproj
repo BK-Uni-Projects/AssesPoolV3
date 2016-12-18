@@ -98,7 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ball.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="cushion.h" />
+    <ClInclude Include="keyboard.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="particleset.h" />
     <ClInclude Include="table.h" />
