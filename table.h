@@ -7,13 +7,12 @@
 /*-----------------------------------------------------------
 Macros
 -----------------------------------------------------------*/
-#define TABLE_X			(0.6f) 
-#define TABLE_Z			(1.2f)
-#define TABLE_Y			(0.1f)
-#define NUM_BALLS		(7)		
-#define NUM_CUSHIONS	(5)		
+const float TABLE_X = 0.6f;
+const float TABLE_Z = 1.2f;
+const float TABLE_Y = 0.1f;
 
-
+const int NUM_BALLS = 7;
+const int NUM_CUSHIONS = 5;
 
 class table
 {

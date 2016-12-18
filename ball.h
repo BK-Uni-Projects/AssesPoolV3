@@ -5,10 +5,9 @@
 /*-----------------------------------------------------------
 Macros
 -----------------------------------------------------------*/
-#define BALL_RADIUS		(0.05f)
-#define BALL_MASS		(0.1f)
-#define SMALL_VELOCITY		(0.01f)
-
+const float BALL_RADIUS = 0.05f;
+const float BALL_MASS = 0.1f;
+const float SMALL_VELOCITY = 0.1f;
 
 static const float gRackPositionX[] = { 0.0f,0.0f,(BALL_RADIUS*2.0f),(-BALL_RADIUS*2.0f),(BALL_RADIUS*4.0f) };
 static const float gRackPositionZ[] = { 0.5f,0.0f,(-BALL_RADIUS*3.0f),(-BALL_RADIUS*3.0f) };
