@@ -4,9 +4,9 @@
 class cushion
 {
 public:
-	vec2	vertices[2]; //2d
-	vec2	centre;
-	vec2	normal;
+	vec2<float>	vertices[2]; //2d
+	vec2<float>	centre;
+	vec2<float>	normal;
 
 	void MakeNormal(void);
 	void MakeCentre(void);

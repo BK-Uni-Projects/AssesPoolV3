@@ -22,8 +22,8 @@ class ball
 private:
 	static int ballIndexCnt;
 public:
-	vec2	position;
-	vec2	velocity;
+	vec2<float>	position;
+	vec2<float>	velocity;
 	float	radius;
 	float	mass;
 	int		index;
@@ -32,7 +32,7 @@ public:
 		mass(BALL_MASS) {index = ballIndexCnt++; Reset();}
 	
 	void Reset(void);
-	void ApplyImpulse(vec2 imp);
+	void ApplyImpulse(vec2<float> imp);
 	void ApplyFrictionForce(int ms);
 	void DoPlaneCollision(const cushion &c);
 	void DoBallCollision(ball &b);

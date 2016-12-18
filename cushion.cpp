@@ -3,7 +3,7 @@
 void cushion::MakeNormal(void)
 {
 	//can do this in 2d
-	vec2 temp = vertices[1]-vertices[0];
+	vec2<float> temp = vertices[1]-vertices[0];
 	normal(0) = temp(1);
 	normal(1) = -temp(0);
 	normal.Normalise();

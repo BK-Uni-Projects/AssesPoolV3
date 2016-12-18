@@ -84,7 +84,7 @@ inline void KeyboardFunc(unsigned char key, int x, int y) {
 		// enter key
 		case(13): {
 			if (gDoCue) {
-				vec2 imp((-sin(gCueAngle) * gCuePower * gCueBallFactor),
+				vec2<float> imp((-sin(gCueAngle) * gCuePower * gCueBallFactor),
 					(-cos(gCueAngle) * gCuePower * gCueBallFactor));
 				gTable.balls[0].ApplyImpulse(imp);
 			}

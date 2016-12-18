@@ -32,7 +32,7 @@ void ball::Reset(void)
 	position(0) = (((row-1)*sep)/2.0f) - (sep*(row-rowIndex));
 }
 
-void ball::ApplyImpulse(vec2 imp)
+void ball::ApplyImpulse(vec2<float> imp)
 {
 	velocity = imp;
 }
@@ -42,12 +42,12 @@ void ball::ApplyFrictionForce(int ms)
 	if(velocity.Magnitude()<=0.0) return;
 
 	//accelaration is opposite to direction of motion
-	vec2 accelaration = -velocity.Normalised();
+	vec2<float> accelaration = -velocity.Normalised();
 	//friction force = constant * mg
 	//F=Ma, so accelaration = force/mass = constant*g
 	accelaration *= (gCoeffFriction * gGravityAccn);
 	//integrate velocity : find change in velocity
-	vec2 velocityChange = ((accelaration * ms)/1000.0f);
+	vec2<float> velocityChange = ((accelaration * float(ms))/1000.0f);
 	//cap magnitude of change in velocity to remove integration errors
 	if(velocityChange.Magnitude() > velocity.Magnitude()) velocity = 0.0;
 	else velocity += velocityChange;
@@ -68,7 +68,7 @@ void ball::Update(int ms)
 	//apply friction
 	ApplyFrictionForce(ms);
 	//integrate position
-	position += ((velocity * ms)/1000.0f);
+	position += ((velocity * float(ms))/1000.0f);
 	//set small velocities to zero
 	if(velocity.Magnitude()<SMALL_VELOCITY) velocity = 0.0;
 }
@@ -79,8 +79,8 @@ bool ball::HasHitPlane(const cushion &c) const
 	if(velocity.Dot(c.normal) >= 0.0) return false;
 	
 	//if in front of plane, then have not hit
-	vec2 relPos = position - c.vertices[0];
-	double sep = relPos.Dot(c.normal);
+	vec2<float> relPos = position - c.vertices[0];
+	float sep = relPos.Dot(c.normal);
 	if(sep > radius) return false;
 	return true;
 }
@@ -90,10 +90,10 @@ bool ball::HasHitBall(const ball &b) const
 	//work out relative position of ball from other ball,
 	//distance between balls
 	//and relative velocity
-	vec2 relPosn = position - b.position;
-	float dist = (float) relPosn.Magnitude();
-	vec2 relPosnNorm = relPosn.Normalised();
-	vec2 relVelocity = velocity - b.velocity;
+	vec2<float> relPosn = position - b.position;
+	float dist = relPosn.Magnitude();
+	vec2<float> relPosnNorm = relPosn.Normalised();
+	vec2<float> relVelocity = velocity - b.velocity;
 
 	//if moving apart, cannot have hit
 	if(relVelocity.Dot(relPosnNorm) >= 0.0) return false;
@@ -105,8 +105,8 @@ bool ball::HasHitBall(const ball &b) const
 void ball::HitPlane(const cushion &c)
 {
 	//reverse velocity component perpendicular to plane  
-	double comp = velocity.Dot(c.normal) * (1.0+gCoeffRestitution);
-	vec2 delta = -(c.normal * comp);
+	float comp = velocity.Dot(c.normal) * (1.0f+gCoeffRestitution);
+	vec2<float> delta = -(c.normal * comp);
 	velocity += delta; 
 
 	//make some particles
@@ -122,12 +122,12 @@ void ball::HitPlane(const cushion &c)
 /*
 	//assume elastic collision
 	//find plane normal
-	vec2 planeNorm = gPlaneNormal_Left;
+	vec2<float> planeNorm = gPlaneNormal_Left;
 	//split velocity into 2 components:
 	//find velocity component perpendicular to plane
-	vec2 perp = planeNorm*(velocity.Dot(planeNorm));
+	vec2<float> perp = planeNorm*(velocity.Dot(planeNorm));
 	//find velocity component parallel to plane
-	vec2 parallel = velocity - perp;
+	vec2<float> parallel = velocity - perp;
 	//reverse perpendicular component
 	//parallel component is unchanged
 	velocity = parallel + (-perp)*gCoeffRestitution;
@@ -137,22 +137,22 @@ void ball::HitPlane(const cushion &c)
 void ball::HitBall(ball &b)
 {
 	//find direction from other ball to this ball
-	vec2 relDir = (position - b.position).Normalised();
+	vec2<float> relDir = (position - b.position).Normalised();
 
 	//split velocities into 2 parts:  one component perpendicular, and one parallel to 
 	//the collision plane, for both balls
 	//(NB the collision plane is defined by the point of contact and the contact normal)
-	float perpV = (float)velocity.Dot(relDir);
-	float perpV2 = (float)b.velocity.Dot(relDir);
-	vec2 parallelV = velocity-(relDir*perpV);
-	vec2 parallelV2 = b.velocity-(relDir*perpV2);
+	float perpV = velocity.Dot(relDir);
+	float perpV2 = b.velocity.Dot(relDir);
+	vec2<float> parallelV = velocity-(relDir*perpV);
+	vec2<float> parallelV2 = b.velocity-(relDir*perpV2);
 	
 	//Calculate new perpendicluar components:
 	//v1 = (2*m2 / m1+m2)*u2 + ((m1 - m2)/(m1+m2))*u1;
 	//v2 = (2*m1 / m1+m2)*u1 + ((m2 - m1)/(m1+m2))*u2;
 	float sumMass = mass + b.mass;
-	float perpVNew = (float)((perpV*(mass-b.mass))/sumMass) + (float)((perpV2*(2.0*b.mass))/sumMass);
-	float perpVNew2 = (float)((perpV2*(b.mass-mass))/sumMass) + (float)((perpV*(2.0*mass))/sumMass);
+	float perpVNew = (perpV*(mass-b.mass))/sumMass + (perpV2*(2.0f*b.mass))/sumMass;
+	float perpVNew2 = (perpV2*(b.mass-mass))/sumMass + (perpV*(2.0f*mass))/sumMass;
 	
 	//find new velocities by adding unchanged parallel component to new perpendicluar component
 	velocity = parallelV + (relDir*perpVNew);
