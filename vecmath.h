@@ -17,7 +17,7 @@ public:
 public:
     vec2(){}
     vec2(double x, double y){elem[0]=x; elem[1]=y;}
-    vec2(double x){elem[0]=x;elem[1]=x;}
+    vec2(double x){elem[0]=elem[1]=x;}
 
     double operator()(int x) const {return elem[x];}
     double &operator()(int x) {return elem[x];}

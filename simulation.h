@@ -78,7 +78,7 @@ public:
 	vec3 position;
 	vec3 velocity;
 
-	particle() {}
+	particle() {position=0;velocity=0;}
 	void update(int ms);
 };
 
